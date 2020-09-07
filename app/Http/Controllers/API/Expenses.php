@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Expense;
+use App\Http\Requests\API\ExpenseRequest;
 
 class Expenses extends Controller
 {
@@ -24,7 +25,7 @@ class Expenses extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ExpenseRequest $request)
     {   
         // take all the details in the submitted request and store them into a variable.
         $data = $request->all();
@@ -51,7 +52,7 @@ class Expenses extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Expense $expense)
+    public function update(ExpenseRequest $request, Expense $expense)
     {
         // get the request data
         $data = $request->all();
