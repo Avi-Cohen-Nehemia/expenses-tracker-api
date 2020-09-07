@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Expense;
 
 class Expenses extends Controller
 {
@@ -14,7 +15,7 @@ class Expenses extends Controller
      */
     public function index()
     {
-        //
+        return Expense::all();
     }
 
     /**
