@@ -27,3 +27,6 @@ Route::post("/expenses", [Expenses::class, "store"]);
 
 // show a specific expense
 Route::get("/expenses/{expense}", [Expenses::class, "show"]);
+
+// update a specific expense
+Route::put("/expenses/{expense}", [Expenses::class, "update"]);

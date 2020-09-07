@@ -38,7 +38,7 @@ class Expenses extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    // the article gets passed in for us using Route Model Binding
+    // the expense gets passed in for us using Route Model Binding
     public function show(Expense $expense)
     {
         return $expense;
@@ -51,9 +51,17 @@ class Expenses extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Expense $expense)
     {
-        //
+        // get the request data
+        $data = $request->all();
+
+        // update the expense using the fill method
+        // then save it to the database
+        $expense->fill($data)->save();
+        
+        // return the updated version
+        return $expense;
     }
 
     /**
