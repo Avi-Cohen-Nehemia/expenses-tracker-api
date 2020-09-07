@@ -24,3 +24,6 @@ Route::get("/expenses", [Expenses::class, "index"]);
 
 // create a new expense
 Route::post("/expenses", [Expenses::class, "store"]);
+
+// show a specific expense
+Route::get("/expenses/{expense}", [Expenses::class, "show"]);

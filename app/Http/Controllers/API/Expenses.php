@@ -25,8 +25,11 @@ class Expenses extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        //
+    {   
+        // take all the details in the submitted request and store them into a variable.
+        $data = $request->all();
+        // create and return a new expense with the the variable we created.
+        return Expense::create($data);
     }
 
     /**
@@ -35,9 +38,10 @@ class Expenses extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    // the article gets passed in for us using Route Model Binding
+    public function show(Expense $expense)
     {
-        //
+        return $expense;
     }
 
     /**
