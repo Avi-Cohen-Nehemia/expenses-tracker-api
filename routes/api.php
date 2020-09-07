@@ -30,3 +30,6 @@ Route::get("/expenses/{expense}", [Expenses::class, "show"]);
 
 // update a specific expense
 Route::put("/expenses/{expense}", [Expenses::class, "update"]);
+
+// delete a specific expense
+Route::delete("/expenses/{expense}", [Expenses::class, "destroy"]);
