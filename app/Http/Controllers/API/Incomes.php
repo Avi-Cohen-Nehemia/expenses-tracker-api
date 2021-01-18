@@ -5,7 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Income;
-use App\Http\Requests\API\ExpenseRequest;
+use App\Http\Requests\API\incomeRequest;
 
 class Incomes extends Controller
 {
@@ -29,7 +29,7 @@ class Incomes extends Controller
     {
         $data = $request->all();
 
-        return Expense::create($data);
+        return income::create($data);
     }
 
     /**
@@ -38,9 +38,9 @@ class Incomes extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Expense $expense)
+    public function show(Income $income)
     {
-        return $expense;
+        return $income;
     }
 
     /**
@@ -50,13 +50,13 @@ class Incomes extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Expense $expense)
+    public function update(Request $request, Income $income)
     {
         $data = $request->all();
 
-        $expense->fill($data)->save();
+        $income->fill($data)->save();
 
-        return $expense;
+        return $income;
     }
 
     /**
@@ -65,9 +65,9 @@ class Incomes extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Expense $expense)
+    public function destroy(Income $income)
     {
-        $expense->delete();
+        $income->delete();
         
         return response(null, 204);
     }

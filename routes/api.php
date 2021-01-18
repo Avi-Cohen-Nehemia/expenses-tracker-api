@@ -33,3 +33,19 @@ Route::put("/expenses/{expense}", [Expenses::class, "update"]);
 
 // delete a specific expense
 Route::delete("/expenses/{expense}", [Expenses::class, "destroy"]);
+
+
+// get all incomes
+Route::get("/incomes", [Incomes::class, "index"]);
+
+// create a new income
+Route::post("/incomes", [Incomes::class, "store"]);
+
+// show a specific income
+Route::get("/incomes/{income}", [Incomes::class, "show"]);
+
+// update a specific income
+Route::put("/incomes/{income}", [Incomes::class, "update"]);
+
+// delete a specific income
+Route::delete("/incomes/{income}", [Incomes::class, "destroy"]);
