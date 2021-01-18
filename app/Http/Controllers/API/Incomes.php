@@ -5,7 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Income;
-use App\Http\Requests\API\incomeRequest;
+use App\Http\Requests\API\IncomeRequest;
 
 class Incomes extends Controller
 {
@@ -16,7 +16,7 @@ class Incomes extends Controller
      */
     public function index()
     {
-        return Incomes::all();
+        return Income::all();
     }
 
     /**
@@ -29,7 +29,7 @@ class Incomes extends Controller
     {
         $data = $request->all();
 
-        return income::create($data);
+        return Income::create($data);
     }
 
     /**
