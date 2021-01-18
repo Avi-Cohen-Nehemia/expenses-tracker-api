@@ -4,6 +4,8 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Income;
+use App\Http\Requests\API\ExpenseRequest;
 
 class Incomes extends Controller
 {
@@ -14,7 +16,7 @@ class Incomes extends Controller
      */
     public function index()
     {
-        //
+        return Incomes::all();
     }
 
     /**
@@ -25,7 +27,8 @@ class Incomes extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+        return Expense::create($data);
     }
 
     /**
