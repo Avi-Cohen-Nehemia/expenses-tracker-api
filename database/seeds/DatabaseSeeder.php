@@ -11,6 +11,19 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // $this->call(UserSeeder::class);
+        DB::table('expenses')->insert([
+            [
+                'amount' => 15.50,
+                'category' => 'Shopping',
+            ],
+            [
+                'amount' => 21.85,
+                'category' => 'Food',
+            ],
+            [
+                'amount' => 128.00,
+                'category' => 'Bills',
+            ],
+        ]);
     }
 }
