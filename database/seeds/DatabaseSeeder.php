@@ -14,19 +14,6 @@ class DatabaseSeeder extends Seeder
     {
         factory(App\Income::class, 10)->create();
 
-        DB::table('incomes')->insert([
-            [
-                'amount' => 30.30,
-                'category' => 'other',
-            ],
-            [
-                'amount' => 1250.00,
-                'category' => 'paycheck',
-            ],
-            [
-                'amount' => 20.00,
-                'category' => 'gift',
-            ],
-        ]);
+        factory(App\Expense::class, 10)->create();
     }
 }
