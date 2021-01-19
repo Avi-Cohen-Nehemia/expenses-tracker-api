@@ -9,22 +9,10 @@ class DatabaseSeeder extends Seeder
      *
      * @return void
      */
+
     public function run()
     {
-        DB::table('expenses')->insert([
-            [
-                'amount' => 15.50,
-                'category' => 'shopping',
-            ],
-            [
-                'amount' => 21.85,
-                'category' => 'groceries',
-            ],
-            [
-                'amount' => 128.00,
-                'category' => 'bills',
-            ],
-        ]);
+        factory(App\Income::class, 10)->create();
 
         DB::table('incomes')->insert([
             [
