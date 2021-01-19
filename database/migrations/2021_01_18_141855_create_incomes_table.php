@@ -16,7 +16,7 @@ class CreateIncomesTable extends Migration
         Schema::create('incomes', function (Blueprint $table) {
             $table->id();
             $table->decimal("amount", 10, 2);
-            $table->string("category", 30);
+            $table->enum('category', ['paycheck', 'gift', 'other']);
             $table->timestamps();
         });
     }

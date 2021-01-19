@@ -14,15 +14,15 @@ class DatabaseSeeder extends Seeder
         DB::table('expenses')->insert([
             [
                 'amount' => 15.50,
-                'category' => 'Shopping',
+                'category' => 'shopping',
             ],
             [
                 'amount' => 21.85,
-                'category' => 'Food',
+                'category' => 'groceries',
             ],
             [
                 'amount' => 128.00,
-                'category' => 'Bills',
+                'category' => 'bills',
             ],
         ]);
     }
