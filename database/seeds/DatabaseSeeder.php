@@ -25,5 +25,20 @@ class DatabaseSeeder extends Seeder
                 'category' => 'bills',
             ],
         ]);
+
+        DB::table('incomes')->insert([
+            [
+                'amount' => 30.30,
+                'category' => 'other',
+            ],
+            [
+                'amount' => 1250.00,
+                'category' => 'paycheck',
+            ],
+            [
+                'amount' => 20.00,
+                'category' => 'gift',
+            ],
+        ]);
     }
 }
