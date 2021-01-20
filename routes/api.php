@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\Expenses;
 use App\Http\Controllers\API\Incomes;
+use App\Http\Controllers\API\Balance;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,6 +43,9 @@ Route::delete("/expenses/{expense}", [Expenses::class, "destroy"]);
 // get all incomes
 Route::get("/incomes", [Incomes::class, "index"]);
 
+// get total income
+Route::get("/incomes/total", [Incomes::class, "totalIncome"]);
+
 // create a new income
 Route::post("/incomes", [Incomes::class, "store"]);
 
@@ -53,3 +57,7 @@ Route::put("/incomes/{income}", [Incomes::class, "update"]);
 
 // delete a specific income
 Route::delete("/incomes/{income}", [Incomes::class, "destroy"]);
+
+
+// get balance
+Route::get("/balance", [Balance::class, "getBalance"]);

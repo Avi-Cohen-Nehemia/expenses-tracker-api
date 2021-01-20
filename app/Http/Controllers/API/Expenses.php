@@ -19,7 +19,7 @@ class Expenses extends Controller
         $collection = collect(Expense::all());
 
         $total = $collection->reduce(function ($acc, $value) {
-            return $acc + $value['amount'];
+            return $acc + $value->amount;
         }, 0);
 
         return $total;

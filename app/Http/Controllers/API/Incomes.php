@@ -14,6 +14,17 @@ class Incomes extends Controller
         return Income::all();
     }
 
+    public static function totalIncome() : float
+    {
+        $collection = collect(Income::all());
+
+        $total = $collection->reduce(function ($acc, $value) {
+            return $acc + $value->amount;
+        }, 0);
+
+        return $total;
+    }
+
     public function store(Request $request)
     {
         $data = $request->all();
