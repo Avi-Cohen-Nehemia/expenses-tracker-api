@@ -23,6 +23,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 // get all expenses
 Route::get("/expenses", [Expenses::class, "index"]);
 
+// get total expenses
+Route::get("/expenses/total", [Expenses::class, "totalExpense"]);
+
 // create a new expense
 Route::post("/expenses", [Expenses::class, "store"]);
 

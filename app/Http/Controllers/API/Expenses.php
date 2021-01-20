@@ -9,22 +9,22 @@ use App\Http\Requests\API\ExpenseRequest;
 
 class Expenses extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         return Expense::all();
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    public static function totalExpense() : float
+    {
+        $collection = collect(Expense::all());
+
+        $total = $collection->reduce(function ($acc, $value) {
+            return $acc + $value['amount'];
+        }, 0);
+
+        return $total;
+    }
+
     public function store(ExpenseRequest $request)
     {   
         // take all the details in the submitted request and store them into a variable.
@@ -33,25 +33,12 @@ class Expenses extends Controller
         return Expense::create($data);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     // the expense gets passed in for us using Route Model Binding
     public function show(Expense $expense)
     {
         return $expense;
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(ExpenseRequest $request, Expense $expense)
     {
         // get the request data
@@ -65,12 +52,6 @@ class Expenses extends Controller
         return $expense;
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Expense $expense)
     {
         // delete the expense from the DB
