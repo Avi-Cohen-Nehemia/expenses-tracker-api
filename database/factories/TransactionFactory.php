@@ -19,5 +19,6 @@ $factory->define(Transaction::class, function (Faker $faker) {
         'amount' => number_format(mt_rand(1, 1000) / 10, 2),
         'category' => $randomCategory,
         'type' => $type ? 'income' : 'expense',
+        'user_id' => 1
     ];
 });
