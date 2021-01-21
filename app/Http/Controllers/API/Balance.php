@@ -16,6 +16,8 @@ class Balance extends Controller
     {
         $balance = Incomes::totalIncome() - Expenses::totalExpense();
 
-        return $balance;
+        return response()->json(['data' => [
+            'balance' => $balance,
+        ]]);
     }
 }
