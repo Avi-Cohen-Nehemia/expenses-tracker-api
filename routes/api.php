@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\Transactions;
+use App\Http\Controllers\API\Users;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,7 +27,7 @@ Route::get("/transactions", [Transactions::class, "index"]);
 Route::get("/transactions/balance", [Transactions::class, "getBalance"]);
 
 // create a new transaction
-Route::post("/transactions", [Transactions::class, "store"]);
+Route::post("/transactions/create", [Transactions::class, "store"]);
 
 // show a specific transaction
 Route::get("/transactions/{transaction}", [Transactions::class, "show"]);
@@ -36,3 +37,7 @@ Route::put("/transactions/{transaction}", [Transactions::class, "update"]);
 
 // delete a specific transaction
 Route::delete("/transactions/{transaction}", [Transactions::class, "destroy"]);
+
+
+// create a new user
+Route::post("/users/create", [Users::class, "store"]);
