@@ -11,7 +11,7 @@ class Users extends Controller
 {
     public function index()
     {
-        return Transaction::all();
+        return User::all();
     }
 
     public function store(UserRequest $request)
@@ -27,9 +27,9 @@ class Users extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(User $user)
     {
-        //
+        return $user;
     }
 
     /**
