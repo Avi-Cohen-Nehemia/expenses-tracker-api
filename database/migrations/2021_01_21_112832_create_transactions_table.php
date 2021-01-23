@@ -19,8 +19,7 @@ class CreateTransactionsTable extends Migration
             $table->enum('type', ['expense', 'income']);
             $table->enum('category', ['groceries', 'shopping', 'rent', 'bills', 'entertainment', 'fuel', 'takeaway', 'paycheck', 'gift', 'other']);
             $table->timestamps();
-            $table->bigInteger("user_id")->unsigned();
-            $table->foreign("user_id")->references("id")->on("users")->onDelete("cascade");
+            $table->foreignId("user_id")->constrained()->onDelete("cascade");
         });
     }
 

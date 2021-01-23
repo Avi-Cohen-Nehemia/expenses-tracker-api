@@ -3,6 +3,8 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Database\Factories\TransactionFactory;
 
 class Transaction extends Model
 {
@@ -11,5 +13,10 @@ class Transaction extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    protected static function newFactory()
+    {
+        return TransactionFactory::new();
     }
 }

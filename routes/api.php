@@ -39,5 +39,9 @@ Route::put("/transactions/{transaction}", [Transactions::class, "update"]);
 Route::delete("/transactions/{transaction}", [Transactions::class, "destroy"]);
 
 
+
+// get all users
+Route::get("/users", [Users::class, "index"]);
+
 // create a new user
 Route::post("/users/create", [Users::class, "store"]);

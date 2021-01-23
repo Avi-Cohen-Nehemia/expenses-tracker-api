@@ -1,6 +1,10 @@
 <?php
 
+namespace Database\Seeders;
+
 use Illuminate\Database\Seeder;
+use App\User;
+use App\Transaction;
 
 class DatabaseSeeder extends Seeder
 {
@@ -12,8 +16,7 @@ class DatabaseSeeder extends Seeder
 
     public function run()
     {
-        factory(App\User::class, 1)->create();
-
-        factory(App\Transaction::class, 20)->create();
+        User::newFactory()->count(1)->create();
+        Transaction::newFactory()->count(10)->create();
     }
 }
