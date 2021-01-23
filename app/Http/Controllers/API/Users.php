@@ -11,7 +11,7 @@ class Users extends Controller
 {
     public function index()
     {
-        //
+        return Transaction::all();
     }
 
     public function store(UserRequest $request)
