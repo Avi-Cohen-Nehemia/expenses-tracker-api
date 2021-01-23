@@ -1,26 +1,39 @@
 <?php
 
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
-
 namespace Database\Factories;
 
 use App\Transaction;
-use Faker\Generator as Faker;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
-$factory->define(Transaction::class, function (Faker $faker) {
+class TransactionFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = Transaction::class;
 
-    $allCategories = ['groceries', 'shopping', 'rent', 'bills', 'entertainment', 'fuel', 'takeaway', 'paycheck', 'gift', 'other', 'paycheck', 'gift', 'other'];
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+        $allCategories = ['groceries', 'shopping', 'rent', 'bills', 'entertainment', 'fuel', 'takeaway', 'paycheck', 'gift', 'other', 'paycheck', 'gift', 'other'];
 
-    $expenseCategories = ['groceries', 'shopping', 'rent', 'bills', 'entertainment', 'fuel', 'takeaway', 'paycheck', 'gift', 'other'];
-    $incomeCategories = ['paycheck', 'gift', 'other'];
+        $expenseCategories = ['groceries', 'shopping', 'rent', 'bills', 'entertainment', 'fuel', 'takeaway', 'paycheck', 'gift', 'other'];
+        $incomeCategories = ['paycheck', 'gift', 'other'];
 
-    $randomCategory = $allCategories[array_rand($allCategories)];
-    $type = in_array($randomCategory , $incomeCategories, true );
+        $randomCategory = $allCategories[array_rand($allCategories)];
+        $type = in_array($randomCategory , $incomeCategories, true );
 
-    return [
-        'amount' => number_format(mt_rand(1, 1000) / 10, 2),
-        'category' => $randomCategory,
-        'type' => $type ? 'income' : 'expense',
-        'user_id' => 1
-    ];
-});
+        return [
+            'amount' => number_format(mt_rand(1, 1000) / 10, 2),
+            'category' => $randomCategory,
+            'type' => $type ? 'income' : 'expense',
+            'user_id' => 1
+        ];
+    }
+}
