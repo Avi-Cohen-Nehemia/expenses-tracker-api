@@ -19,7 +19,7 @@ class CreateTransactionsTable extends Migration
             $table->enum('type', ['expense', 'income']);
             $table->enum('category', ['groceries', 'shopping', 'rent', 'bills', 'entertainment', 'fuel', 'takeaway', 'paycheck', 'gift', 'other']);
             $table->timestamps();
-            $table->foreignId("article_id")->constrained()->onDelete("cascade");
+            $table->foreignId("user_id")->constrained()->onDelete("cascade");
         });
     }
 
