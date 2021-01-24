@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Transaction;
 use App\Http\Requests\API\TransactionRequest;
+use App\Http\Resources\API\TransactionResource;
+
 
 class Transactions extends Controller
 {
@@ -42,13 +44,14 @@ class Transactions extends Controller
         // take all the details in the submitted request and store them into a variable.
         $data = $request->all();
         // create and return a new Transaction with the the variable we created.
-        return Transaction::create($data);
+        $transaction = Transaction::create($data);
+        return new TransactionResource($transaction);
     }
 
     // the Transaction gets passed in for us using Route Model Binding
     public function show(Transaction $transaction)
     {
-        return $transaction;
+        return new TransactionResource($transaction);
     }
 
     public function update(TransactionRequest $request, Transaction $transaction)
@@ -61,7 +64,7 @@ class Transactions extends Controller
         $transaction->fill($data)->save();
         
         // return the updated version
-        return $transaction;
+        return new TransactionResource($transaction);
     }
 
     public function destroy(Transaction $transaction)
