@@ -11,18 +11,6 @@ use App\Http\Resources\API\TransactionResource;
 
 class Transactions extends Controller
 {
-    // public function getBalance()
-    // {
-    //     $balance = Incomes::totalIncome() - Expenses::totalExpense();
-
-    //     $format = new NumberFormatter( 'en_GB', NumberFormatter::CURRENCY );
-    //     $formattedBalance = $format->formatCurrency($balance, "GBP");
-
-    //     return response()->json(['data' => [
-    //         'balance' => $formattedBalance,
-    //     ]]);
-    // }
-
     public function index()
     {
         return Transaction::all();

@@ -3,6 +3,7 @@
 namespace App\Http\Resources\API;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use NumberFormatter;
 
 class TransactionResource extends JsonResource
 {
@@ -14,8 +15,13 @@ class TransactionResource extends JsonResource
      */
     public function toArray($request)
     {
+        $amount = $this->amount;
+
+        $format = new NumberFormatter( 'en_GB', NumberFormatter::CURRENCY );
+        $formattedAmount = $format->formatCurrency($amount, "GBP");
+
         return[
-            "amount" => $this->amount,
+            "amount" => $formattedAmount,
             "type" => $this->type,
             "category" => $this->category,
             "created_at" => $this->created_at

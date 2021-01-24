@@ -6,19 +6,24 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\User;
 use App\Http\Requests\API\UserRequest;
+use App\Http\Resources\API\UserResource;
 
 class Users extends Controller
 {
     public function index()
     {
-        return User::all();
+        $allUsers = User::all();
+
+        return new UserResource($allUsers);
     }
 
     public function store(UserRequest $request)
     {   
         $data = $request->all();
 
-        return User::create($data);
+        $newUser = User::create($data);
+
+        return new UserResource($newUser);
     }
 
     /**
@@ -29,7 +34,7 @@ class Users extends Controller
      */
     public function show(User $user)
     {
-        return $user;
+        return new UserResource($user);
     }
 
     /**
