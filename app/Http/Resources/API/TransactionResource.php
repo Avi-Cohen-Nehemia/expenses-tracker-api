@@ -18,10 +18,11 @@ class TransactionResource extends JsonResource
         $amount = $this->amount;
 
         $format = new NumberFormatter( 'en_GB', NumberFormatter::CURRENCY );
-        $formattedAmount = $format->formatCurrency($amount, "GBP");
+        $formattedWithCurrency = $format->formatCurrency($amount, "GBP");
+        $formattedWithType = $this->type === 'income' ? "+{$formattedWithCurrency}" : "-{$formattedWithCurrency}";
 
         return[
-            "amount" => $formattedAmount,
+            "amount" => $formattedWithType,
             "type" => $this->type,
             "category" => $this->category,
             "created_at" => $this->created_at
