@@ -22,12 +22,15 @@ class UserResource extends JsonResource
         $format = new NumberFormatter( 'en_GB', NumberFormatter::CURRENCY );
         $formattedBalance = $format->formatCurrency($balance, "GBP");
 
+        $collection = collect($this->transactions);
+        $sorted = $collection->sortByDesc('created_at');
+
         return [
             "id" => $this->id,
             "name" => $this->name,
             "email" => $this->email,
             "balance" => $formattedBalance,
-            "transactions" => TransactionResource::collection($this->transactions),
+            "transactions" => TransactionResource::collection($sorted),
         ];
     }
 }
