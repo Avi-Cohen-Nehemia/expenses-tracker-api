@@ -8,7 +8,7 @@ use Database\Factories\TransactionFactory;
 
 class Transaction extends Model
 {
-    protected $fillable = ["amount", "category", "type"];
+    protected $fillable = ["amount", "category", "type", "user_id"];
 
     public function user()
     {
