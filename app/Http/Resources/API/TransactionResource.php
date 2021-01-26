@@ -4,6 +4,7 @@ namespace App\Http\Resources\API;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use NumberFormatter;
+use Carbon\Carbon;
 
 class TransactionResource extends JsonResource
 {
@@ -21,11 +22,13 @@ class TransactionResource extends JsonResource
         $formattedWithCurrency = $format->formatCurrency($amount, "GBP");
         $formattedWithType = $this->type === 'income' ? "+{$formattedWithCurrency}" : "-{$formattedWithCurrency}";
 
+        $formattedDate = $this->created_at->format('d-m-Y');
+
         return[
             "amount" => $formattedWithType,
             "type" => $this->type,
             "category" => $this->category,
-            "created_at" => $this->created_at
+            "created_at" => $formattedDate
         ];
     }
 }
