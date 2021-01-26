@@ -4,6 +4,8 @@ namespace App\Http\Resources\API;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use NumberFormatter;
+use App\Utility\Balance;
+use Illuminate\Support\Facades\DB;
 
 class TransactionResource extends JsonResource
 {
@@ -23,11 +25,19 @@ class TransactionResource extends JsonResource
 
         $formattedDate = $this->created_at->format('d-m-Y');
 
+        $transactionsToDate = DB::table("transactions")
+            ->where("user_id", $this->user_id)
+            ->whereBetween('created_at', ["2020-01-01", $this->created_at])
+            ->get();
+        $balanceAtTheTime = Balance::calculateBalance($transactionsToDate) + $this->$amount;
+        $formattedBalanceAtTheTime = $format->formatCurrency($balanceAtTheTime, "GBP");
+
         return[
             "amount" => $formattedWithType,
             "type" => $this->type,
             "category" => $this->category,
-            "created_at" => $formattedDate
+            "created_at" => $formattedDate,
+            "balance_at_the_time" => $formattedBalanceAtTheTime
         ];
     }
 }

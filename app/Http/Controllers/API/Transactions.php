@@ -16,21 +16,11 @@ class Transactions extends Controller
         return Transaction::all();
     }
 
-    public static function getBalance() : float
-    {
-        $collection = collect(Transaction::all());
-
-        $total = $collection->reduce(function ($acc, $value) {
-            return $acc + $value->amount;
-        }, 0);
-
-        return $total;
-    }
-
     public function store(TransactionRequest $request)
     {   
         // take all the details in the submitted request and store them into a variable.
         $data = $request->all();
+
         // create and return a new Transaction with the the variable we created.
         $transaction = Transaction::create($data);
         return new TransactionResource($transaction);
