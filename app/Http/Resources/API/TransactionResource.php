@@ -4,7 +4,6 @@ namespace App\Http\Resources\API;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use NumberFormatter;
-use Carbon\Carbon;
 
 class TransactionResource extends JsonResource
 {
