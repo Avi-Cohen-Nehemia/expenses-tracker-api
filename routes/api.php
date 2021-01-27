@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\Transactions;
 use App\Http\Controllers\API\Users;
+use App\Http\Controllers\API\Login;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,23 +21,22 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::post("/login", [Login::class, "login"]);
+
 // get all transactions
 Route::get("/transactions", [Transactions::class, "index"]);
 
-// get balance
-Route::get("/transactions/balance", [Transactions::class, "getBalance"]);
-
 // create a new transaction
-Route::post("/transactions/create", [Transactions::class, "store"]);
+Route::post("/transactions/create", [Transactions::class, "store"])->middleware('auth:api');
 
 // show a specific transaction
 Route::get("/transactions/{transaction}", [Transactions::class, "show"]);
 
 // update a specific transaction
-Route::put("/transactions/{transaction}", [Transactions::class, "update"]);
+Route::put("/transactions/{transaction}", [Transactions::class, "update"])->middleware('auth:api');
 
 // delete a specific transaction
-Route::delete("/transactions/{transaction}", [Transactions::class, "destroy"]);
+Route::delete("/transactions/{transaction}", [Transactions::class, "destroy"])->middleware('auth:api');
 
 
 
@@ -44,7 +44,7 @@ Route::delete("/transactions/{transaction}", [Transactions::class, "destroy"]);
 Route::get("/users", [Users::class, "index"]);
 
 // show a specific user
-Route::get("/users/{user}", [Users::class, "show"]);
+Route::get("/users/{user}", [Users::class, "show"])->middleware('auth:api');
 
 // create a new user
 Route::post("/users/create", [Users::class, "store"]);
