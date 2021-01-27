@@ -23,7 +23,14 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::post("/login", [Login::class, "login"]);
 
-Route::group(["prefix" => "transactions"], function() {
+Route::group(
+
+    [
+        "prefix" => "transactions",
+        "middleware" => ["auth:api"]
+    ],
+    
+    function() {
 
     // get all transactions
     Route::get("", [Transactions::class, "index"]);
@@ -32,13 +39,13 @@ Route::group(["prefix" => "transactions"], function() {
     Route::get("/{transaction}", [Transactions::class, "show"]);
 
     // create a new transaction
-    Route::post("", [Transactions::class, "store"])->middleware('auth:api');
+    Route::post("", [Transactions::class, "store"]);
 
     // update a specific transaction
-    Route::put("/{transaction}", [Transactions::class, "update"])->middleware('auth:api');
+    Route::put("/{transaction}", [Transactions::class, "update"]);
 
     // delete a specific transaction
-    Route::delete("/{transaction}", [Transactions::class, "destroy"])->middleware('auth:api');
+    Route::delete("/{transaction}", [Transactions::class, "destroy"]);
 });
 
 
