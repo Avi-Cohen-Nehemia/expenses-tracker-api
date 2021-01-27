@@ -24,15 +24,15 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post("/login", [Login::class, "login"]);
 
 Route::group(["prefix" => "transactions"], function() {
-    
+
     // get all transactions
     Route::get("", [Transactions::class, "index"]);
 
-    // create a new transaction
-    Route::post("/create", [Transactions::class, "store"])->middleware('auth:api');
-
     // show a specific transaction
     Route::get("/{transaction}", [Transactions::class, "show"]);
+
+    // create a new transaction
+    Route::post("", [Transactions::class, "store"])->middleware('auth:api');
 
     // update a specific transaction
     Route::put("/{transaction}", [Transactions::class, "update"])->middleware('auth:api');
@@ -49,7 +49,7 @@ Route::get("/users", [Users::class, "index"]);
 Route::get("/users/{user}", [Users::class, "show"])->middleware('auth:api');
 
 // create a new user
-Route::post("/users/create", [Users::class, "store"]);
+Route::post("/users", [Users::class, "store"]);
 
 // create a new user
 Route::delete("/users/{user}", [Users::class, "destroy"]);
