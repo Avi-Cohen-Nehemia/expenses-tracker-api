@@ -48,3 +48,6 @@ Route::get("/users/{user}", [Users::class, "show"]);
 
 // create a new user
 Route::post("/users/create", [Users::class, "store"]);
+
+// create a new user
+Route::delete("/users/{user}", [Users::class, "destroy"]);
