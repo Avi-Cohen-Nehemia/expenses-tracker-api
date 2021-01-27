@@ -23,21 +23,23 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::post("/login", [Login::class, "login"]);
 
-// get all transactions
-Route::get("/transactions", [Transactions::class, "index"]);
+Route::group(["prefix" => "transactions"], function() {
+    
+    // get all transactions
+    Route::get("", [Transactions::class, "index"]);
 
-// create a new transaction
-Route::post("/transactions/create", [Transactions::class, "store"])->middleware('auth:api');
+    // create a new transaction
+    Route::post("/create", [Transactions::class, "store"])->middleware('auth:api');
 
-// show a specific transaction
-Route::get("/transactions/{transaction}", [Transactions::class, "show"]);
+    // show a specific transaction
+    Route::get("/{transaction}", [Transactions::class, "show"]);
 
-// update a specific transaction
-Route::put("/transactions/{transaction}", [Transactions::class, "update"])->middleware('auth:api');
+    // update a specific transaction
+    Route::put("/{transaction}", [Transactions::class, "update"])->middleware('auth:api');
 
-// delete a specific transaction
-Route::delete("/transactions/{transaction}", [Transactions::class, "destroy"])->middleware('auth:api');
-
+    // delete a specific transaction
+    Route::delete("/{transaction}", [Transactions::class, "destroy"])->middleware('auth:api');
+});
 
 
 // get all users
