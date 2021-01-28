@@ -53,7 +53,7 @@ Route::group(
 Route::get("/users", [Users::class, "index"]);
 
 // show a specific user
-Route::get("/users/{user}", [Users::class, "show"])->middleware('auth:api');
+Route::get("/users/{user}", [Users::class, "show"]);
 
 // create a new user
 Route::post("/users", [Users::class, "store"]);
