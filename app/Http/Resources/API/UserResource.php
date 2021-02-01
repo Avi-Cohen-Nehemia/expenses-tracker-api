@@ -5,7 +5,7 @@ namespace App\Http\Resources\API;
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\API\TransactionResource;
 use App\Utility\Balance;
-use NumberFormatter;
+use App\Utility\FormatToCurrency;
 
 class UserResource extends JsonResource
 {
@@ -18,9 +18,7 @@ class UserResource extends JsonResource
     public function toArray($request)
     {
         $balance = Balance::calculateBalance($this->transactions);
-
-        $format = new NumberFormatter( 'en_GB', NumberFormatter::CURRENCY );
-        $formattedBalance = $format->formatCurrency($balance, "GBP");
+        $formattedBalance = FormatToCurrency::toCurrency($balance);
 
         $collection = collect($this->transactions);
         $sorted = $collection->sortByDesc('created_at');
