@@ -23,23 +23,26 @@ class UserResource extends JsonResource
         $collection = collect($this->transactions);
         $sorted = $collection->sortByDesc('created_at');
 
+        // calculate total income
         $income = $collection->filter(function ($transaction, $key) {
             return $transaction->type === "income";
-        });
-
-        $expense = $collection->filter(function ($transaction, $key) {
-            return $transaction->type === "expense";
         });
 
         $totalIncome = $income->reduce(function ($acc, $transaction) {
             return $acc + $transaction->amount;
         }, 0);
 
+        $formattedTotalIncome = FormatToCurrency::toCurrency($totalIncome);
+
+        // calculate total expense
+        $expense = $collection->filter(function ($transaction, $key) {
+            return $transaction->type === "expense";
+        });
+
         $totalExpense = $expense->reduce(function ($acc, $transaction) {
             return $acc + $transaction->amount;
         }, 0);
 
-        $formattedTotalIncome = FormatToCurrency::toCurrency($totalIncome);
         $formattedTotalExpense = FormatToCurrency::toCurrency($totalExpense);
 
         return [
