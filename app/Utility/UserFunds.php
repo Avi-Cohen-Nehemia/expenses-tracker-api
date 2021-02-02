@@ -80,6 +80,7 @@ class UserFunds
             }
         }
 
+
         $totals = [];
 
         foreach ($categories as $categoryKey => $category) {
@@ -94,6 +95,7 @@ class UserFunds
                 }
             }
         }
+
 
         $reducedTotals = [];
 
