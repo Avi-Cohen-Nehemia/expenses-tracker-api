@@ -6,6 +6,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\API\TransactionResource;
 use App\Utility\Balance;
 use App\Utility\FormatToCurrency;
+use App\Utility\UserFunds;
 
 class UserResource extends JsonResource
 {
@@ -17,41 +18,20 @@ class UserResource extends JsonResource
      */
     public function toArray($request)
     {
-        $balance = Balance::calculateBalance($this->transactions);
-        $formattedBalance = FormatToCurrency::toCurrency($balance);
+        $balance = UserFunds::calculateBalance($this->transactions);
+        $totalIncome = UserFunds::calculateIncome($this->transactions);
+        $totalExpense = UserFunds::calculateExpense($this->transactions);
 
         $collection = collect($this->transactions);
         $sorted = $collection->sortByDesc('created_at');
-
-        // calculate total income
-        $income = $collection->filter(function ($transaction, $key) {
-            return $transaction->type === "income";
-        });
-
-        $totalIncome = $income->reduce(function ($acc, $transaction) {
-            return $acc + $transaction->amount;
-        }, 0);
-
-        $formattedTotalIncome = FormatToCurrency::toCurrency($totalIncome);
-
-        // calculate total expense
-        $expense = $collection->filter(function ($transaction, $key) {
-            return $transaction->type === "expense";
-        });
-
-        $totalExpense = $expense->reduce(function ($acc, $transaction) {
-            return $acc + $transaction->amount;
-        }, 0);
-
-        $formattedTotalExpense = FormatToCurrency::toCurrency($totalExpense);
 
         return [
             "id" => $this->id,
             "name" => $this->name,
             "email" => $this->email,
-            "balance" => $formattedBalance,
-            "total_income" => $formattedTotalIncome,
-            "total_expense" => $formattedTotalExpense,
+            "balance" => $balance,
+            "total_income" => $totalIncome,
+            "total_expense" => $totalExpense,
             "transactions" => TransactionResource::collection($sorted),
         ];
     }
