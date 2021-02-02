@@ -106,12 +106,13 @@ class UserFunds
                 $acc = 0;
 
                 foreach ($value as $key => $amount) {
-                    $acc -= $amount;
+                    $acc += $amount;
                 }
 
                 $reducedTotal = [
                     "category" => key($array),
-                    "amount" => $acc
+                    "amount" => $acc,
+                    "amount_with_currency" => FormatToCurrency::toCurrency($acc)
                 ];
 
                 $reducedTotals[] = $reducedTotal;
