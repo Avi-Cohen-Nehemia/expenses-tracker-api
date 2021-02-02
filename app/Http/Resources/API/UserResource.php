@@ -21,6 +21,7 @@ class UserResource extends JsonResource
         $balance = UserFunds::calculateBalance($this->transactions);
         $totalIncome = UserFunds::calculateIncome($this->transactions);
         $totalExpense = UserFunds::calculateExpense($this->transactions);
+        $totalExpenseByCategory = UserFunds::calculateByCategory($this->transactions);
 
         $collection = collect($this->transactions);
         $sorted = $collection->sortByDesc('created_at');
@@ -32,6 +33,7 @@ class UserResource extends JsonResource
             "balance" => $balance,
             "total_income" => $totalIncome,
             "total_expense" => $totalExpense,
+            "total_expense_by_category" => $totalExpenseByCategory,
             "transactions" => TransactionResource::collection($sorted),
         ];
     }
