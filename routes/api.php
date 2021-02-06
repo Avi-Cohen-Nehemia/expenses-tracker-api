@@ -21,7 +21,30 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+// log in existing user
 Route::post("/login", [Login::class, "login"]);
+
+// create a new user
+Route::post("/users", [Users::class, "store"]);
+
+Route::group(
+
+    [
+        "prefix" => "users",
+        "middleware" => ["auth:api"]
+    ],
+    
+    function() {
+
+    // get all users
+    Route::get("", [Users::class, "index"]);
+
+    // show a specific user
+    Route::get("/{user}", [Users::class, "show"]);
+
+    // create a new user
+    Route::delete("/{user}", [Users::class, "destroy"]);
+});
 
 Route::group(
 
@@ -47,16 +70,3 @@ Route::group(
     // delete a specific transaction
     Route::delete("/{transaction}", [Transactions::class, "destroy"]);
 });
-
-
-// get all users
-Route::get("/users", [Users::class, "index"]);
-
-// show a specific user
-Route::get("/users/{user}", [Users::class, "show"]);
-
-// create a new user
-Route::post("/users", [Users::class, "store"]);
-
-// create a new user
-Route::delete("/users/{user}", [Users::class, "destroy"]);
