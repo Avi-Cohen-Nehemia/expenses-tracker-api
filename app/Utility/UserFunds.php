@@ -30,9 +30,7 @@ class UserFunds
 
         $balance = $totalIncome - $totalExpense;
 
-        $formattedBalance = FormatToCurrency::toCurrency($balance);
-
-        return $formattedBalance;
+        return $balance;
     }
 
     public static function calculateIncome($transactions) : string
@@ -47,9 +45,7 @@ class UserFunds
             return $acc + $transaction->amount;
         }, 0);
 
-        $formattedTotalIncome = FormatToCurrency::toCurrency($totalIncome);
-
-        return $formattedTotalIncome;
+        return $totalIncome;
     }
 
     public static function calculateExpense($transactions) : string
@@ -64,9 +60,7 @@ class UserFunds
             return $acc + $transaction->amount;
         }, 0);
 
-        $formattedTotalExpense = FormatToCurrency::toCurrency($totalExpense);
-
-        return $formattedTotalExpense;
+        return $totalExpense;
     }
 
     public static function calculateByCategory($transactions)
