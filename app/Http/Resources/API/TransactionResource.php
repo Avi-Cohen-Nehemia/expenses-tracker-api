@@ -33,7 +33,8 @@ class TransactionResource extends JsonResource
         $formattedBalanceAtTheTime = $format->formatCurrency($balanceAtTheTime, "GBP");
 
         return[
-            "amount" => $formattedWithType,
+            "amount" => $this->amount,
+            "amount_with_currency" => $formattedWithType,
             "type" => $this->type,
             "category" => $this->category,
             "created_at" => $formattedDate,
