@@ -38,6 +38,7 @@ class TransactionResource extends JsonResource
             "type" => $this->type,
             "category" => $this->category,
             "created_at" => $formattedDate,
+            "unformatted_created_at" => $this->created_at,
             "balance_at_the_time" => $formattedBalanceAtTheTime
         ];
     }
