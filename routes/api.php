@@ -42,6 +42,9 @@ Route::group(
     // show a specific user
     Route::get("/{user}", [Users::class, "show"]);
 
+    // update a specific transaction
+    Route::put("/{user}", [Users::class, "update"]);
+
     // create a new user
     Route::delete("/{user}", [Users::class, "destroy"]);
 });
