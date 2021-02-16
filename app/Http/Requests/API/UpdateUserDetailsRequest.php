@@ -24,7 +24,7 @@ class UpdateUserDetailsRequest extends FormRequest
     public function rules()
     {
         return [
-            "name" => ["string"],
+            "name" => ["string", "min:3", "max:20"],
             "email" => ["email"],
         ];
     }
