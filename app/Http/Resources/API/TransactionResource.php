@@ -3,7 +3,7 @@
 namespace App\Http\Resources\API;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use NumberFormatter;
+// use NumberFormatter;
 use App\Utility\Balance;
 use Illuminate\Support\Facades\DB;
 
@@ -19,9 +19,9 @@ class TransactionResource extends JsonResource
     {
         $amount = $this->amount;
 
-        $format = new NumberFormatter( 'en_GB', NumberFormatter::CURRENCY );
-        $formattedWithCurrency = $format->formatCurrency($amount, "GBP");
-        $formattedWithType = $this->type === 'income' ? $formattedWithCurrency : "- {$formattedWithCurrency}";
+        // $format = new NumberFormatter( 'en_GB', NumberFormatter::CURRENCY );
+        // $formattedWithCurrency = $format->formatCurrency($amount, "GBP");
+        $formattedWithType = $this->type === 'income' ? "£{$this->$amount}" : "- £{$this->$amount}";
 
         $formattedDate = $this->created_at->format('d-m-Y');
 
@@ -30,7 +30,7 @@ class TransactionResource extends JsonResource
             ->whereBetween('created_at', ["2020-01-01", $this->created_at])
             ->get();
         $balanceAtTheTime = Balance::calculateBalance($transactionsToDate) + $this->$amount;
-        $formattedBalanceAtTheTime = $format->formatCurrency($balanceAtTheTime, "GBP");
+        // $formattedBalanceAtTheTime = $format->formatCurrency($balanceAtTheTime, "GBP");
 
         return[
             "amount" => $this->amount,
@@ -39,7 +39,7 @@ class TransactionResource extends JsonResource
             "category" => $this->category,
             "created_at" => $formattedDate,
             "unformatted_created_at" => $this->created_at,
-            "balance_at_the_time" => $formattedBalanceAtTheTime
+            "balance_at_the_time" => "£{$formattedBalanceAtTheTime}"
         ];
     }
 }
