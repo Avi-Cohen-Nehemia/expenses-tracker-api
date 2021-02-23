@@ -19,8 +19,6 @@ class TransactionResource extends JsonResource
     {
         $amount = $this->amount;
 
-        // $format = new NumberFormatter( 'en_GB', NumberFormatter::CURRENCY );
-        // $formattedWithCurrency = $format->formatCurrency($amount, "GBP");
         $formattedWithType = $this->type === 'income' ? "£{$amount}" : "- £{$amount}";
 
         $formattedDate = $this->created_at->format('d-m-Y');
@@ -29,8 +27,7 @@ class TransactionResource extends JsonResource
             ->where("user_id", $this->user_id)
             ->whereBetween('created_at', ["2020-01-01", $this->created_at])
             ->get();
-        $balanceAtTheTime = Balance::calculateBalance($transactionsToDate) + $amount;
-        // $formattedBalanceAtTheTime = $format->formatCurrency($balanceAtTheTime, "GBP");
+        $balanceAtTheTime = Balance::calculateBalance($transactionsToDate);
 
         return[
             "transaction_id" => $this->id,
