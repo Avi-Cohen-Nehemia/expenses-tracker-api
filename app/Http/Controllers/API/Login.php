@@ -20,7 +20,7 @@ class Login extends Controller
 
         if (!$user || $request->password !== $user->password) {
             throw ValidationException::withMessages([
-                'name' => ["incorrect credentials"]
+                'error' => ["Incorrect username or password"]
             ]);
         }
 
