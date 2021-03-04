@@ -51,6 +51,8 @@ class Transactions extends Controller
         $transaction->delete();
         
         // use a 204 code as there is no content in the response
-        return response(null, 204);
+        return response()->json([
+            "message" => "Transaction deleted successfully",
+        ]);
     }
 }
