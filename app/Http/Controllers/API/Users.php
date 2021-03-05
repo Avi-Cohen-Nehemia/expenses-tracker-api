@@ -43,14 +43,29 @@ class Users extends Controller
         } catch (QueryException $error) {
 
             if (isset($request->name)) {
-                return response()->json(['error' => "Username already taken"], Response::HTTP_CONFLICT);
+                return response()->json([
+                    'error' => [
+                        "title" => "Username already taken",
+                        "text" => "Please try a different username"
+                    ]
+                ], Response::HTTP_CONFLICT);
             }
 
             if (isset($request->email)) {
-                return response()->json(['error' => "Email already taken"], Response::HTTP_CONFLICT);
+                return response()->json([
+                    'error' => [
+                        "title" => "Email already taken",
+                        "text" => "Please try a different email"
+                    ]
+                ], Response::HTTP_CONFLICT);
             }
 
-            return response()->json(['error' => "Something went wrong"], Response::HTTP_BAD_REQUEST);
+            return response()->json([
+                'error' => [
+                    "title" => "Oops... Something went wrong",
+                    "text" => "Please try again"
+                ] 
+            ], Response::HTTP_BAD_REQUEST);
         }
     }
 
