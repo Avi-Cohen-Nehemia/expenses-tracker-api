@@ -24,7 +24,7 @@ class TransactionRequest extends FormRequest
     public function rules()
     {
         return [
-            "amount" => ["required", "numeric"],
+            "amount" => ["required", "numeric", "gt:0"],
             "category" => ["required", "string", "max:30"],
             "type" => ["required", "string", "in:expense,income"],
         ];
