@@ -4,10 +4,12 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Database\QueryException;
 use App\User;
 use App\Http\Requests\API\UserRequest;
 use App\Http\Requests\API\UpdateUserDetailsRequest;
 use App\Http\Resources\API\UserResource;
+use Symfony\Component\HttpFoundation\Response;
 
 class Users extends Controller
 {
@@ -32,11 +34,15 @@ class Users extends Controller
 
     public function update(UpdateUserDetailsRequest $request, User $user)
     {
-        $data = $request->all();
+        try {
+            $data = $request->all();
+            $user->fill($data)->save();
 
-        $user->fill($data)->save();
-        
-        return new UserResource($user);
+            return new UserResource($user);
+
+        } catch (QueryException $error) {
+            return response()->json(['error' => "Username already taken"], Response::HTTP_CONFLICT);
+        }
     }
 
     public function destroy(User $user)
