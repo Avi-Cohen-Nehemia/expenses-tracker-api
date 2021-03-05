@@ -50,7 +50,7 @@ class Transactions extends Controller
         // delete the Transaction from the DB
         $transaction->delete();
         
-        // use a 204 code as there is no content in the response
+        // return a message that could displayed on the front end as feedback later on
         return response()->json([
             "message" => "Transaction deleted successfully",
         ]);
