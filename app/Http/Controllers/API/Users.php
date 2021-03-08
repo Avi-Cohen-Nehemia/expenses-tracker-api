@@ -20,11 +20,31 @@ class Users extends Controller
 
     public function store(UserRequest $request)
     {   
-        $data = $request->all();
+        try {
+            $data = $request->all();
 
-        $newUser = User::create($data);
+            $newUser = User::create($data);
 
-        return new UserResource($newUser);
+            return new UserResource($newUser);
+
+        } catch (QueryException $error) {
+
+            $title = "";
+            $text = "";
+
+            if (isset($request->name)) {
+                $title = "Username already taken";
+                $text = "Please try a different username";
+            }
+
+            return response()->json([
+                'errors' => [
+                    "title" => $title,
+                    "text" => $text
+                ]
+            ], Response::HTTP_CONFLICT);
+        }
+        
     }
 
     public function show(User $user)
