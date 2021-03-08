@@ -30,11 +30,11 @@ class TransactionRequest extends FormRequest
         ];
     }
 
-    // public function messages()
-    // {
-    //     return [
-    //         'amount.required' => 'Amount is required',
-    //         'amount.gt:0' => 'Please enter amount greater than 0',
-    //     ];
-    // }
+    public function messages()
+    {
+        return [
+            'amount.required' => 'The Amount field is required',
+            'amount.gt' => 'Amount must be greater than 0',
+        ];
+    }
 }
