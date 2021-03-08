@@ -29,4 +29,16 @@ class UserRequest extends FormRequest
             "password" => ["required", "string", "min:8", "max:20"],
         ];
     }
+
+    public function messages()
+    {
+        return [
+            "name.required" => "The Username field is required",
+            "name.min" => "Username must be at least 3 characters long",
+            "name.max" => "Username must be less than 20 characters long",
+            "password.required" => "The Password field is required",
+            "password.min" => "Password must be at least 8 characters long",
+            "password.max" => "Password must be less than 20 characters long"
+        ];
+    }
 }
