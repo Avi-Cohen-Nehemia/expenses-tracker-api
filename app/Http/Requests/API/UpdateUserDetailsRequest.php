@@ -28,4 +28,13 @@ class UpdateUserDetailsRequest extends FormRequest
             "email" => ["email"],
         ];
     }
+
+    public function messages()
+    {
+        return [
+            "name.min" => "Username must be at least 3 characters long",
+            "name.max" => "Username must be less than 20 characters long",
+            "email.email" => "Email must be a valid address"
+        ];
+    }
 }

@@ -29,4 +29,12 @@ class TransactionRequest extends FormRequest
             "type" => ["required", "string", "in:expense,income"],
         ];
     }
+
+    // public function messages()
+    // {
+    //     return [
+    //         'amount.required' => 'Amount is required',
+    //         'amount.gt:0' => 'Please enter amount greater than 0',
+    //     ];
+    // }
 }

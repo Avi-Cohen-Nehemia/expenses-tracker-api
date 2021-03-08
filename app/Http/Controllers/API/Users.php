@@ -44,7 +44,7 @@ class Users extends Controller
 
             if (isset($request->name)) {
                 return response()->json([
-                    'error' => [
+                    'errors' => [
                         "title" => "Username already taken",
                         "text" => "Please try a different username"
                     ]
@@ -53,7 +53,7 @@ class Users extends Controller
 
             if (isset($request->email)) {
                 return response()->json([
-                    'error' => [
+                    'errors' => [
                         "title" => "Email already taken",
                         "text" => "Please try a different email"
                     ]
@@ -61,7 +61,7 @@ class Users extends Controller
             }
 
             return response()->json([
-                'error' => [
+                'errors' => [
                     "title" => "Oops... Something went wrong",
                     "text" => "Please try again"
                 ] 
