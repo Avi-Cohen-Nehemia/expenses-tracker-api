@@ -16,6 +16,15 @@ class Transactions extends Controller
         return Transaction::all();
     }
 
+    public function showTransactionsByDateRange(Request $request)
+    {
+        $transactions = Transaction::where("user_id", $request->user_id)
+            ->whereBetween('created_at', [$request->get('from'), $request->get('to')])
+            ->get();
+
+        return $transactions;
+    }
+
     public function store(TransactionRequest $request)
     {   
         // take all the details in the submitted request and store them into a variable.
