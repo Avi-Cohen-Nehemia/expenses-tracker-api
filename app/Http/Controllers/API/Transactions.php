@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Transaction;
 use App\Http\Requests\API\TransactionRequest;
 use App\Http\Resources\API\TransactionResource;
+use App\Http\Resources\API\TransactionsByDateRangeResource;
 
 
 class Transactions extends Controller
@@ -22,7 +23,7 @@ class Transactions extends Controller
             ->whereBetween('created_at', [$request->get('from'), $request->get('to')])
             ->get();
 
-        return $transactions;
+        return new TransactionsByDateRangeResource($transactions);
     }
 
     public function store(TransactionRequest $request)
