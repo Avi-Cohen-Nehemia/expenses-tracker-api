@@ -20,14 +20,11 @@ class TransactionsByDateRangeResource extends JsonResource
             return new TransactionResource($transaction);
         });
 
-        $balance = UserFunds::calculateBalance($transactions);
         $totalIncome = UserFunds::calculateIncome($transactions);
         $totalExpense = UserFunds::calculateExpense($transactions);
         $totalExpenseByCategory = UserFunds::calculateByCategory($transactions);
 
         return [
-            "balance" => floatval($balance),
-            "balance_with_currency" => "£{$balance}",
             "total_income" => floatval($totalIncome),
             "total_income_with_currency" => "£{$totalIncome}",
             "total_expense" => floatval($totalExpense),
