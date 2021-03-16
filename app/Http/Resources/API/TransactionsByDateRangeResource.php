@@ -4,7 +4,6 @@ namespace App\Http\Resources\API;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\API\TransactionResource;
-use App\Utility\FormatToCurrency;
 use App\Utility\UserFunds;
 
 class TransactionsByDateRangeResource extends JsonResource
@@ -27,7 +26,7 @@ class TransactionsByDateRangeResource extends JsonResource
 
         return [
             "total_income" => floatval($totalIncome),
-            "total_income_with_currency" => FormatToCurrency::toCurrency($totalIncome),
+            "total_income_with_currency" => "£{$totalIncome}",
             "total_expense" => floatval($totalExpense),
             "total_expense_with_currency" => "£{$totalExpense}",
             "total_expense_by_category" => $totalExpenseByCategory,
