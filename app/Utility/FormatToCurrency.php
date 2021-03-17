@@ -7,9 +7,18 @@ class FormatToCurrency
 {
     public static function toCurrency(float $amount, string $currency = "GBP") : string
     {
-        $format = new NumberFormatter( 'en_GB', NumberFormatter::CURRENCY );
-        $formattedAmount = $format->formatCurrency($amount, $currency);
+        if ($currency === "GBP") {
+            $format = new NumberFormatter('en_GB', NumberFormatter::CURRENCY);
+            $formattedAmount = $format->formatCurrency($amount, $currency);
 
-        return $formattedAmount;
+            return $formattedAmount;
+        }
+
+        $format = new NumberFormatter('en_GB', NumberFormatter::DECIMAL);
+        $format->setAttribute(NumberFormatter::FRACTION_DIGITS, 2);
+
+        $formattedAmount = $format->format($amount);
+
+        return "{$formattedAmount} {$currency}";
     }
 }
