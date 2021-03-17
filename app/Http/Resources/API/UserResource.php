@@ -18,10 +18,16 @@ class UserResource extends JsonResource
      */
     public function toArray($request)
     {
+        // user funds stats
         $balance = UserFunds::calculateBalance($this->transactions);
         $totalIncome = UserFunds::calculateIncome($this->transactions);
         $totalExpense = UserFunds::calculateExpense($this->transactions);
         $totalExpenseByCategory = UserFunds::calculateByCategory($this->transactions);
+
+        //formatted to currency user funds stats
+        $formattedBalance = FormatToCurrency::toCurrency($balance);
+        $formattedTotalIncome = FormatToCurrency::toCurrency($totalIncome);
+        $formattedTotalExpense = FormatToCurrency::toCurrency($totalExpense);
 
         $collection = collect($this->transactions);
         $sorted = $collection->sortByDesc('created_at');
@@ -31,11 +37,11 @@ class UserResource extends JsonResource
             "name" => $this->name,
             "email" => $this->email,
             "balance" => floatval($balance),
-            "balance_with_currency" => "£{$balance}",
+            "balance_with_currency" => $formattedBalance,
             "total_income" => floatval($totalIncome),
-            "total_income_with_currency" => "£{$totalIncome}",
+            "total_income_with_currency" => $formattedTotalIncome,
             "total_expense" => floatval($totalExpense),
-            "total_expense_with_currency" => "£{$totalExpense}",
+            "total_expense_with_currency" => $formattedTotalExpense,
             "total_expense_by_category" => $totalExpenseByCategory,
             "transactions" => TransactionResource::collection($sorted),
         ];
