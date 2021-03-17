@@ -2,7 +2,7 @@
 
 namespace App\Utility;
 use Illuminate\Support\Collection;
-// use App\Utility\FormatToCurrency;
+use App\Utility\FormatToCurrency;
 
 class UserFunds
 {
@@ -106,7 +106,7 @@ class UserFunds
                 $reducedTotal = [
                     "category" => key($array),
                     "amount" => $acc,
-                    "amount_with_currency" => "£{$acc}"
+                    "amount_with_currency" => FormatToCurrency::toCurrency($acc)
                 ];
 
                 $reducedTotals[] = $reducedTotal;
