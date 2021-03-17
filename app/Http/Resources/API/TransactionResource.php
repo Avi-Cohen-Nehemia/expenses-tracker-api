@@ -5,6 +5,7 @@ namespace App\Http\Resources\API;
 use Illuminate\Http\Resources\Json\JsonResource;
 // use NumberFormatter;
 use App\Utility\Balance;
+use App\Utility\FormatToCurrency;
 use Illuminate\Support\Facades\DB;
 
 class TransactionResource extends JsonResource
@@ -37,7 +38,7 @@ class TransactionResource extends JsonResource
             "category" => $this->category,
             "created_at" => $formattedDate,
             "unformatted_created_at" => $this->created_at,
-            "balance_at_the_time" => "£{$balanceAtTheTime}"
+            "balance_at_the_time" => FormatToCurrency::toCurrency($balanceAtTheTime)
         ];
     }
 }
