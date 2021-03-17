@@ -64,6 +64,11 @@ class Transactions extends Controller
             ->orderBy('created_at', 'desc')
             ->get();
 
-        return new TransactionsByDateRangeResource($transactions);
+        $data = [
+            "transactions" => $transactions,
+            "currency" => $request->currency
+        ];
+
+        return new TransactionsByDateRangeResource($data);
     }
 }
