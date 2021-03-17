@@ -3,7 +3,6 @@
 namespace App\Http\Resources\API;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-// use NumberFormatter;
 use App\Utility\Balance;
 use App\Utility\FormatToCurrency;
 use Illuminate\Support\Facades\DB;
