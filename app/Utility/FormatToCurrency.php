@@ -5,10 +5,10 @@ use NumberFormatter;
 
 class FormatToCurrency
 {
-    public static function toCurrency(float $amount) : string
+    public static function toCurrency(float $amount, string $currency = "GBP") : string
     {
         $format = new NumberFormatter( 'en_GB', NumberFormatter::CURRENCY );
-        $formattedAmount = $format->formatCurrency($amount, "GBP");
+        $formattedAmount = $format->formatCurrency($amount, $currency);
 
         return $formattedAmount;
     }
