@@ -19,6 +19,6 @@ class FormatToCurrency
 
         $formattedAmount = $format->format($amount);
 
-        return "{$formattedAmount} {$currency}";
+        return "{$currency} {$formattedAmount}";
     }
 }
