@@ -31,7 +31,7 @@ class TransactionsByDateRangeResource extends JsonResource
     public function toArray($request)
     {
         $transactions = $this->transactions->map(function ($transaction) {
-            return new TransactionResource($transaction);
+            return new TransactionResource($transaction, $this->currency);
         });
 
         $today = Carbon::now()->toDateString();

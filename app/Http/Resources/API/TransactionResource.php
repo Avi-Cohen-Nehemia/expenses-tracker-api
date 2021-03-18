@@ -9,6 +9,14 @@ use Illuminate\Support\Facades\DB;
 
 class TransactionResource extends JsonResource
 {
+    private $currency = "GBP";
+
+    public function __construct($transaction, $currency)
+    {
+        parent::__construct($transaction);
+        $this->currency = $currency;
+    }
+
     /**
      * Transform the resource into an array.
      *
@@ -38,7 +46,7 @@ class TransactionResource extends JsonResource
             "category" => $this->category,
             "created_at" => $formattedDate,
             "unformatted_created_at" => $this->created_at,
-            "balance_at_the_time" => FormatToCurrency::toCurrency($balanceAtTheTime)
+            "balance_at_the_time" => FormatToCurrency::toCurrency($balanceAtTheTime, $this->currency)
         ];
     }
 }
