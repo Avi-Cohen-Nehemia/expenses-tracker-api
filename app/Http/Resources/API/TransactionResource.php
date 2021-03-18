@@ -26,7 +26,7 @@ class TransactionResource extends JsonResource
     public function toArray($request)
     {
         $amount = $this->amount;
-        $amountWithCurrency = FormatToCurrency::toCurrency($amount);
+        $amountWithCurrency = FormatToCurrency::toCurrency($amount, $this->currency);
 
         $amountFormattedWithType = $this->type === 'income' ? $amountWithCurrency : "- {$amountWithCurrency}";
 
