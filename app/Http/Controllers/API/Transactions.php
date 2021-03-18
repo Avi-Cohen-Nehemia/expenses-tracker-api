@@ -65,10 +65,10 @@ class Transactions extends Controller
             ->get();
 
         $data = [
-            "transactions" => $transactions,
-            "currency" => $request->currency
+            "currency" => $request->currency,
+            "user_id" => $request->user_id
         ];
 
-        return new TransactionsByDateRangeResource($data);
+        return new TransactionsByDateRangeResource($transactions, $data);
     }
 }
