@@ -63,7 +63,7 @@ class UserFunds
         return $totalExpense;
     }
 
-    public static function calculateByCategory($transactions)
+    public static function calculateByCategory($transactions, $currency)
     {
         $categories = [];
 
@@ -106,7 +106,7 @@ class UserFunds
                 $reducedTotal = [
                     "category" => key($array),
                     "amount" => $acc,
-                    "amount_with_currency" => FormatToCurrency::toCurrency($acc)
+                    "amount_with_currency" => FormatToCurrency::toCurrency($acc, $currency)
                 ];
 
                 $reducedTotals[] = $reducedTotal;

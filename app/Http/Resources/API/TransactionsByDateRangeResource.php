@@ -43,7 +43,7 @@ class TransactionsByDateRangeResource extends JsonResource
 
         $totalIncome = UserFunds::calculateIncome($transactions);
         $totalExpense = UserFunds::calculateExpense($transactions);
-        $totalExpenseByCategory = UserFunds::calculateByCategory($transactions);
+        $totalExpenseByCategory = UserFunds::calculateByCategory($transactions, $this->currency);
 
         return [
             "balance" => floatval($balance),
