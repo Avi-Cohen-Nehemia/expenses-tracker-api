@@ -5,13 +5,14 @@ namespace App\Http\Resources\API;
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Utility\Balance;
 use App\Utility\FormatToCurrency;
+use App\Utility\ConvertCurrency;
 use Illuminate\Support\Facades\DB;
 
 class TransactionResource extends JsonResource
 {
-    private $currency = "GBP";
+    private $currency;
 
-    public function __construct($transaction, $currency)
+    public function __construct($transaction, $currency = "GBP")
     {
         parent::__construct($transaction);
         $this->currency = $currency;
@@ -40,7 +41,7 @@ class TransactionResource extends JsonResource
 
         return[
             "transaction_id" => $this->id,
-            "amount" => $this->amount,
+            "amount" => ConvertCurrency::convert($amount, $this->currency),
             "amount_with_currency" => $amountFormattedWithType,
             "type" => $this->type,
             "category" => $this->category,
