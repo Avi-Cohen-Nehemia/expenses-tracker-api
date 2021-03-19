@@ -3,6 +3,7 @@
 namespace App\Utility;
 use Illuminate\Support\Collection;
 use App\Utility\FormatToCurrency;
+use App\Utility\ConvertCurrency;
 
 class UserFunds
 {
@@ -63,7 +64,7 @@ class UserFunds
         return $totalExpense;
     }
 
-    public static function calculateByCategory($transactions, $currency)
+    public static function calculateByCategory($transactions, $currency = "GBP")
     {
         $categories = [];
 
@@ -105,7 +106,7 @@ class UserFunds
 
                 $reducedTotal = [
                     "category" => key($array),
-                    "amount" => $acc,
+                    "amount" => ConvertCurrency::convert($acc, $currency),
                     "amount_with_currency" => FormatToCurrency::toCurrency($acc, $currency)
                 ];
 

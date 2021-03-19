@@ -29,8 +29,15 @@ class UserResource extends JsonResource
         $formattedTotalIncome = FormatToCurrency::toCurrency($totalIncome);
         $formattedTotalExpense = FormatToCurrency::toCurrency($totalExpense);
 
-        $collection = collect($this->transactions);
-        $sorted = $collection->sortByDesc('created_at');
+        // $collection = collect($this->transactions);
+        // $sorted = $collection->sortByDesc('created_at');
+
+        $transactions = $this->transactions->map(function ($transaction) {
+            return new TransactionResource($transaction, "GBP");
+        });
+        // sort transactions from newest to oldest and use values() method
+        // to prevent the result from being returned as an object
+        $sorted = $transactions->sortByDesc('created_at')->values();
 
         return [
             "id" => $this->id,
@@ -43,7 +50,7 @@ class UserResource extends JsonResource
             "total_expense" => floatval($totalExpense),
             "total_expense_with_currency" => $formattedTotalExpense,
             "total_expense_by_category" => $totalExpenseByCategory,
-            "transactions" => TransactionResource::collection($sorted),
+            "transactions" => $sorted,
         ];
     }
 }
