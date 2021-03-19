@@ -5,6 +5,7 @@ namespace App\Http\Resources\API;
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\API\TransactionResource;
 use App\Utility\FormatToCurrency;
+use App\Utility\ConvertCurrency;
 use App\Utility\UserFunds;
 use App\Utility\Balance;
 use Carbon\Carbon;
@@ -46,11 +47,11 @@ class TransactionsByDateRangeResource extends JsonResource
         $totalExpenseByCategory = UserFunds::calculateByCategory($transactions, $this->currency);
 
         return [
-            "balance" => floatval($balance),
+            "balance" => ConvertCurrency::convert($balance, $this->currency),
             "balance_with_currency" => FormatToCurrency::toCurrency($balance, $this->currency),
-            "total_income" => floatval($totalIncome),
+            "total_income" => ConvertCurrency::convert($totalIncome, $this->currency),
             "total_income_with_currency" => FormatToCurrency::toCurrency($totalIncome, $this->currency),
-            "total_expense" => floatval($totalExpense),
+            "total_expense" => ConvertCurrency::convert($totalExpense, $this->currency),
             "total_expense_with_currency" => FormatToCurrency::toCurrency($totalExpense, $this->currency),
             "total_expense_by_category" => $totalExpenseByCategory,
             "transactions" => $transactions,
