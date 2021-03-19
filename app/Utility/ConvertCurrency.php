@@ -12,6 +12,8 @@ class ConvertCurrency
 
         $rate = $response->json()["rates"][$desiredCurrency];
 
-        return $amountInGBP * $rate;
+        $convertedAmount =  $amountInGBP * $rate;
+
+        return floatval(number_format($convertedAmount, 2));
     }
 }
