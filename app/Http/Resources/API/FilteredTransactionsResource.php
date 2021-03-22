@@ -11,7 +11,7 @@ use App\Utility\Balance;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
-class TransactionsByDateRangeResource extends JsonResource
+class FilteredTransactionsResource extends JsonResource
 {
     private $data;
 

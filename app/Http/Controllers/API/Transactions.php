@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Transaction;
 use App\Http\Requests\API\TransactionRequest;
 use App\Http\Resources\API\TransactionResource;
-use App\Http\Resources\API\TransactionsByDateRangeResource;
+use App\Http\Resources\API\FilteredTransactionsResource;
 use App\Utility\ConvertCurrency;
 use Carbon\Carbon;
 
@@ -59,7 +59,7 @@ class Transactions extends Controller
         ]);
     }
 
-    public function showTransactionsByDateRange(Request $request)
+    public function showFilteredTransactions(Request $request)
     {
         $rate = ConvertCurrency::getConversionRate($request->currency);
 
@@ -77,6 +77,6 @@ class Transactions extends Controller
             "user_id" => $request->user_id
         ];
 
-        return new TransactionsByDateRangeResource($transactions, $data);
+        return new FilteredTransactionsResource($transactions, $data);
     }
 }

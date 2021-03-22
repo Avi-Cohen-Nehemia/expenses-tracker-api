@@ -62,7 +62,7 @@ Route::group(
     Route::get("", [Transactions::class, "index"]);
 
     // get transactions between certain dates
-    Route::get("/by-date-range", [Transactions::class, "showTransactionsByDateRange"]);
+    Route::get("/by-date-range", [Transactions::class, "showFilteredTransactions"]);
 
     // show a specific transaction
     Route::get("/{transaction}", [Transactions::class, "show"]);
