@@ -12,9 +12,10 @@ class TransactionResource extends JsonResource
 {
     private $currency;
 
-    public function __construct($transaction, $currency = "GBP")
+    public function __construct($transaction, $rate = 1, $currency = "GBP")
     {
         parent::__construct($transaction);
+        $this->rate = $rate;
         $this->currency = $currency;
     }
 
@@ -26,8 +27,8 @@ class TransactionResource extends JsonResource
      */
     public function toArray($request)
     {
-        $amount = $this->amount;
-        $amountWithCurrency = FormatToCurrency::toCurrency($amount, $this->currency);
+        $transactionAmount = new ConvertCurrency($this->amount);
+        $amountWithCurrency = FormatToCurrency::toCurrency($transactionAmount->amountInGBP, $this->rate, $this->currency);
 
         $amountFormattedWithType = $this->type === 'income' ? $amountWithCurrency : "- {$amountWithCurrency}";
 
@@ -41,13 +42,13 @@ class TransactionResource extends JsonResource
 
         return[
             "transaction_id" => $this->id,
-            "amount" => ConvertCurrency::convert($amount, $this->currency),
+            "amount" => $transactionAmount->convert($this->rate),
             "amount_with_currency" => $amountFormattedWithType,
             "type" => $this->type,
             "category" => $this->category,
             "created_at" => $formattedDate,
             "unformatted_created_at" => $this->created_at,
-            "balance_at_the_time" => FormatToCurrency::toCurrency($balanceAtTheTime, $this->currency)
+            "balance_at_the_time" => FormatToCurrency::toCurrency($balanceAtTheTime, $this->rate, $this->currency)
         ];
     }
 }

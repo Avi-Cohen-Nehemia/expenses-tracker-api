@@ -7,9 +7,10 @@ use App\Utility\ConvertCurrency;
 
 class FormatToCurrency
 {
-    public static function toCurrency(float $amount, string $currency = "GBP") : string
+    public static function toCurrency(float $amount, float $rate, string $currency = "GBP") : string
     {
-        $convertedAmount = ConvertCurrency::convert($amount, $currency);
+        $transaction = new ConvertCurrency($amount);
+        $convertedAmount = $transaction->convert($rate);
 
         if ($currency === "GBP") {
             $format = new NumberFormatter('en_GB', NumberFormatter::CURRENCY);

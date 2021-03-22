@@ -8,6 +8,8 @@ use App\Transaction;
 use App\Http\Requests\API\TransactionRequest;
 use App\Http\Resources\API\TransactionResource;
 use App\Http\Resources\API\TransactionsByDateRangeResource;
+use App\Utility\ConvertCurrency;
+use Carbon\Carbon;
 
 
 class Transactions extends Controller
@@ -59,13 +61,19 @@ class Transactions extends Controller
 
     public function showTransactionsByDateRange(Request $request)
     {
+        $rate = ConvertCurrency::getConversionRate($request->currency);
+
+        // add one day to make 'to' value included in the queried transactions 
+        $to = new Carbon($request->get('to'));
+        $toPlusOneDay = $to->addDays(1);
         $transactions = Transaction::where("user_id", $request->user_id)
-            ->whereBetween('created_at', [$request->get('from'), $request->get('to')])
+            ->whereBetween('created_at', [$request->get('from'), $toPlusOneDay])
             ->orderBy('created_at', 'desc')
             ->get();
 
         $data = [
             "currency" => $request->currency,
+            "rate" => $rate,
             "user_id" => $request->user_id
         ];
 

@@ -93,6 +93,7 @@ class UserFunds
 
 
         $reducedTotals = [];
+        $rate = ConvertCurrency::getConversionRate($currency);
 
         foreach ($totals as $totalsKey => $array) {
 
@@ -104,10 +105,13 @@ class UserFunds
                     $acc += $amount;
                 }
 
+                $total = new ConvertCurrency($acc);
+                $convertedTotal = $total->convert($rate);
+
                 $reducedTotal = [
                     "category" => key($array),
-                    "amount" => ConvertCurrency::convert($acc, $currency),
-                    "amount_with_currency" => FormatToCurrency::toCurrency($acc, $currency)
+                    "amount" => $convertedTotal,
+                    "amount_with_currency" => FormatToCurrency::toCurrency($total->amountInGBP, $rate, $currency)
                 ];
 
                 $reducedTotals[] = $reducedTotal;
