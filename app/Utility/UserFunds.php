@@ -2,7 +2,8 @@
 
 namespace App\Utility;
 use Illuminate\Support\Collection;
-// use App\Utility\FormatToCurrency;
+use App\Utility\FormatToCurrency;
+use App\Utility\ConvertCurrency;
 
 class UserFunds
 {
@@ -63,7 +64,7 @@ class UserFunds
         return $totalExpense;
     }
 
-    public static function calculateByCategory($transactions)
+    public static function calculateByCategory($transactions, $currency = "GBP")
     {
         $categories = [];
 
@@ -92,6 +93,7 @@ class UserFunds
 
 
         $reducedTotals = [];
+        $rate = ConvertCurrency::getConversionRate($currency);
 
         foreach ($totals as $totalsKey => $array) {
 
@@ -103,10 +105,13 @@ class UserFunds
                     $acc += $amount;
                 }
 
+                $total = new ConvertCurrency($acc);
+                $convertedTotal = $total->convert($rate);
+
                 $reducedTotal = [
                     "category" => key($array),
-                    "amount" => $acc,
-                    "amount_with_currency" => "£{$acc}"
+                    "amount" => $convertedTotal,
+                    "amount_with_currency" => FormatToCurrency::toCurrency($total->amountInGBP, $rate, $currency)
                 ];
 
                 $reducedTotals[] = $reducedTotal;

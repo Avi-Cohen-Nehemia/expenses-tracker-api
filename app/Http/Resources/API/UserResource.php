@@ -18,26 +18,36 @@ class UserResource extends JsonResource
      */
     public function toArray($request)
     {
+        // user funds stats
         $balance = UserFunds::calculateBalance($this->transactions);
         $totalIncome = UserFunds::calculateIncome($this->transactions);
         $totalExpense = UserFunds::calculateExpense($this->transactions);
         $totalExpenseByCategory = UserFunds::calculateByCategory($this->transactions);
 
-        $collection = collect($this->transactions);
-        $sorted = $collection->sortByDesc('created_at');
+        //formatted to currency user funds stats
+        $formattedBalance = FormatToCurrency::toCurrency($balance, 1, "GBP");
+        $formattedTotalIncome = FormatToCurrency::toCurrency($totalIncome, 1, "GBP");
+        $formattedTotalExpense = FormatToCurrency::toCurrency($totalExpense, 1, "GBP");
+
+        $transactions = $this->transactions->map(function ($transaction) {
+            return new TransactionResource($transaction, 1, "GBP");
+        });
+        // sort transactions from newest to oldest and use values() method
+        // to prevent the result from being returned as an object
+        $sorted = $transactions->sortByDesc('created_at')->values();
 
         return [
             "id" => $this->id,
             "name" => $this->name,
             "email" => $this->email,
             "balance" => floatval($balance),
-            "balance_with_currency" => "£{$balance}",
+            "balance_with_currency" => $formattedBalance,
             "total_income" => floatval($totalIncome),
-            "total_income_with_currency" => "£{$totalIncome}",
+            "total_income_with_currency" => $formattedTotalIncome,
             "total_expense" => floatval($totalExpense),
-            "total_expense_with_currency" => "£{$totalExpense}",
+            "total_expense_with_currency" => $formattedTotalExpense,
             "total_expense_by_category" => $totalExpenseByCategory,
-            "transactions" => TransactionResource::collection($sorted),
+            "transactions" => $sorted,
         ];
     }
 }
