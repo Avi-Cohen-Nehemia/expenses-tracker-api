@@ -121,33 +121,3 @@ class UserFunds
         return $reducedTotals;
     }
 }
-
-// $test = [
-//     [
-//         "amount" => 22,
-//         "category" => "rent",
-//         "type" => "expense"
-//     ],
-//     [
-//         "amount" => 34,
-//         "category" => "bills",
-//         "type" => "expense"
-//     ],
-//     [
-//         "amount" => 50,
-//         "category" => "bills",
-//         "type" => "expense"
-//     ],
-//     [
-//         "amount" => 54,
-//         "category" => "paycheck",
-//         "type" => "income"
-//     ],
-//     [
-//         "amount" => 100,
-//         "category" => "rent",
-//         "type" => "expense"
-//     ]
-// ];
-
-// var_dump(UserFunds::calculateByCategory($test));
