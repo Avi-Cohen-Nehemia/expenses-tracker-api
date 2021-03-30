@@ -61,8 +61,8 @@ Transactions
 #### Request
 ```json
 {
-    "name": "<username>", // Required, not the same as another in the database
-    "password": "<password>" // Required, at least 8 characters long
+    "name": "<username>",
+    "password": "<password>"
 }
 ```
 
@@ -109,7 +109,6 @@ Transactions
 #### Request
 ```json
 {
-    // you can send one of them if you don't want to edit both
     "username": "<username>",
     "email": "<email>"
 }
@@ -139,11 +138,10 @@ Transactions
 #### Request
 ```json
 {
-    // you can send one of them if you don't want to edit both
-    "amount": 12.2548, // Required, any number which is not 0
-    "type": "<type>", // Required, must be "expense" or "income"
-    "category": "<category>", // Required, must be one of the list created in the table migration
-    "user_id": 12345 // Required, valid user id
+    "amount": 12.2548,
+    "type": "<type>",
+    "category": "<category>",
+    "user_id": 12345
 }
 ```
 
@@ -168,7 +166,7 @@ Transactions
 #### Request
 ```json
 {
-    // N/A
+
 }
 ```
 
@@ -185,7 +183,7 @@ Transactions
 #### Request
 ```json
 {
-    // N/A
+
 }
 ```
 
@@ -199,8 +197,8 @@ Transactions
         "total_income_with_currency": "£8465.45",
         "total_expense": 60.90,
         "total_expense_with_currency": "£60.90",
-        "total_expense_by_category": [...],
-        "transactions": [...]
+        "total_expense_by_category": [],
+        "transactions": []
     }
 }
 ```
