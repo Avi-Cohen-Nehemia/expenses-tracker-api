@@ -7,7 +7,6 @@ use App\Http\Resources\API\TransactionResource;
 use App\Utility\FormatToCurrency;
 use App\Utility\ConvertCurrency;
 use App\Utility\UserFunds;
-use App\Utility\Balance;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
