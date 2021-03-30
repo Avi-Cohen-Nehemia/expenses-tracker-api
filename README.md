@@ -178,8 +178,9 @@ Transactions
 }
 ```
 
-`// replace the parameters inclosed in *param* with the ones you wish to apply`
 ### Request Filtered Transactions - GET `/transactions/by-date-range?user_id=*user-id*&from=*yyy-mm-dd*&to=*yyy-mm-dd*&currency=*currency*`
+
+`// replace the parameters inclosed in *param* with the ones you wish to apply`
 
 #### Request
 ```json
