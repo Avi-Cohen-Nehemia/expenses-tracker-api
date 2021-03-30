@@ -7,33 +7,6 @@ use App\Utility\ConvertCurrency;
 
 class UserFunds
 {
-    public static function calculateBalance($transactions) : string
-    {
-        $collection = collect($transactions);
-
-        // Separate incomes and expenses into 2 arrays
-        $income = $collection->filter(function ($transaction, $key) {
-            return $transaction->type === "income";
-        });
-
-        $expense = $collection->filter(function ($transaction, $key) {
-            return $transaction->type === "expense";
-        });
-
-        // Calculate their total separately
-        $totalIncome = $income->reduce(function ($acc, $transaction) {
-            return $acc + $transaction->amount;
-        }, 0);
-
-        $totalExpense = $expense->reduce(function ($acc, $transaction) {
-            return $acc + $transaction->amount;
-        }, 0);
-
-        $balance = $totalIncome - $totalExpense;
-
-        return $balance;
-    }
-
     public static function calculateIncome($transactions) : string
     {
         $collection = collect($transactions);
@@ -62,6 +35,16 @@ class UserFunds
         }, 0);
 
         return $totalExpense;
+    }
+
+    public static function calculateBalance($transactions) : string
+    {
+        $totalExpense = UserFunds::calculateExpense($transactions);
+        $totalIncome = UserFunds::calculateIncome($transactions);
+
+        $balance = $totalIncome - $totalExpense;
+
+        return $balance;
     }
 
     public static function calculateByCategory($transactions, $currency = "GBP")
