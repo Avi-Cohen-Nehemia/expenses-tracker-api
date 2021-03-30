@@ -15,7 +15,8 @@ The Vagrant Box set up to use Laravel's Homestead image. To get started:
     - DB_USERNAME=root
     - DB_PASSWORD=secret
 
-    1. add and fill these 2 variables below after generating the authentication keys 
+
+    add and fill these 2 variables below after generating the authentication keys 
     - PASSPORT_PERSONAL_ACCESS_CLIENT_ID=
     - PASSPORT_PERSONAL_ACCESS_CLIENT_SECRET=
 
@@ -177,8 +178,8 @@ Transactions
 }
 ```
 
+`// replace the parameters inclosed in *param* with the ones you wish to apply`
 ### Request Filtered Transactions - GET `/transactions/by-date-range?user_id=*user-id*&from=*yyy-mm-dd*&to=*yyy-mm-dd*&currency=*currency*`
-// replace the parameters inclosed in *param* with the ones you wish to apply
 
 #### Request
 ```json
