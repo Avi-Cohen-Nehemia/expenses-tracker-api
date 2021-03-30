@@ -1,61 +1,206 @@
-<p align="center"><img src="https://res.cloudinary.com/dtfbvvkyp/image/upload/v1566331377/laravel-logolockup-cmyk-red.svg" width="400"></p>
+# Expenses Tracker - Easy way to keep track of your money
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+## Back-end Architecture - Laravel
 
-## About Laravel
+### Getting Started:
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+The Vagrant Box set up to use Laravel's Homestead image. To get started:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+1. Clone this repo and `cd` into the new directory
+1. In your new directory, run `composer install`
+1. Run `vendor/bin/homestead make`
+1. Copy the `.env.example` file to a new `.env` file by running `cp .env.example .env`
+1. Update env variables in your `.env` file
+    - DB_DATABASE=homestead
+    - DB_USERNAME=root
+    - DB_PASSWORD=secret
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+    1. add and fill these 2 variables below after generating the authentication keys 
+    - PASSPORT_PERSONAL_ACCESS_CLIENT_ID=
+    - PASSPORT_PERSONAL_ACCESS_CLIENT_SECRET=
 
-## Learning Laravel
+1. Run `vagrant up`
+1. ssh to the virtual machine: `vagrant ssh`
+1. If prompted for a password, insert `vagrant`
+1. Navigate to `code` folder: `cd code`
+1. Run `artisan key:generate`
+1. Run the database migrations: `artisan migrate`
+1. Create the Passport authentication keys: `php artisan passport:install`
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Visit `http://homestead.test` on Mac or `http://localhost:8000` on Windows:
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+---
 
-## Laravel Sponsors
+# Expenses Tracker - API
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+## General
 
-### Premium Partners
+All requests should:
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[OP.GG](https://op.gg)**
+- For non-production use the basename `http://localhost:8000/api/`
+- Be sent with the `Accept: application/json` header.
 
-## Contributing
+## End points:
+Registration and Login
+- `POST /users`
+- `POST /login`
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Users
+- `GET /user/:user-id`
+- `PUT /user/:user-id`
+- `DELETE /user/:user-id`
 
-## Code of Conduct
+Transactions
+- `GET /transactions/:transaction-id`
+- `POST /transactions`
+- `PATCH /transactions/:transaction-id`
+- `DELETE /transactions/:transaction-id`
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### Register User - POST `/users`
 
-## Security Vulnerabilities
+#### Request
+```json
+{
+    "name": "<username>", // Required, not the same as another in the database
+    "password": "<password>" // Required, at least 8 characters long
+}
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+#### Response
+```json
+{
+    "data": {
+        "id": 30,
+        "name": "testing123",
+        "email": null,
+        "balance": 0,
+        "balance_with_currency": "£0.00",
+        "total_income": 0,
+        "total_income_with_currency": "£0.00",
+        "total_expense": 0,
+        "total_expense_with_currency": "£0.00",
+        "total_expense_by_category": [],
+        "transactions": []
+    }
+}
+```
 
-## License
+### Login User - POST `/login`
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+#### Request
+```json
+{
+    "username": "<username>",
+    "password": "<password>"
+}
+```
+
+#### Response
+```json
+{
+    "id": 12345,
+    "name": "<username>",
+    "access_token": "<token>",
+}
+```
+
+### Edit User - POST `/users/:user-id`
+
+#### Request
+```json
+{
+    // you can send one of them if you don't want to edit both
+    "username": "<username>",
+    "email": "<email>"
+}
+```
+
+#### Response
+```json
+{
+    "data": {
+        "id": 12345,
+        "name": "<new username>",
+        "email": "<new email>",
+        "balance": 0,
+        "balance_with_currency": "£0.00",
+        "total_income": 0,
+        "total_income_with_currency": "£0.00",
+        "total_expense": 0,
+        "total_expense_with_currency": "£0.00",
+        "total_expense_by_category": [],
+        "transactions": []
+    }
+}
+```
+
+### Create New transaction - POST `/transactions`
+
+#### Request
+```json
+{
+    // you can send one of them if you don't want to edit both
+    "amount": 12.2548, // Required, any number which is not 0
+    "type": "<type>", // Required, must be "expense" or "income"
+    "category": "<category>", // Required, must be one of the list created in the table migration
+    "user_id": 12345 // Required, valid user id
+}
+```
+
+#### Response
+```json
+{
+    "data": {
+        "transaction_id": 12345,
+        "amount": 50.25,
+        "amount_with_currency": "£50.25",
+        "type": "<type>",
+        "category": "<category>",
+        "created_at": "<date>",
+        "unformatted_created_at": "<date + time>",
+        "balance_at_the_time": 5154.60
+    }
+}
+```
+
+### Delete Transaction - POST `/transactions/:transaction-id`
+
+#### Request
+```json
+{
+    // N/A
+}
+```
+
+#### Response
+```json
+{
+    "message": "Transaction deleted successfully"
+}
+```
+
+### Request Filtered Transactions - GET `/transactions/by-date-range?user_id=*user-id*&from=*yyy-mm-dd*&to=*yyy-mm-dd*&currency=*currency*`
+// replace the parameters inclosed in *param* with the ones you wish to apply
+
+#### Request
+```json
+{
+    // N/A
+}
+```
+
+#### Response
+```json
+{
+    "data": {
+        "balance": 85413.65,
+        "balance_with_currency": "£85413.65",
+        "total_income": 8465.45,
+        "total_income_with_currency": "£8465.45",
+        "total_expense": 60.90,
+        "total_expense_with_currency": "£60.90",
+        "total_expense_by_category": [...],
+        "transactions": [...]
+    }
+}
+```
