@@ -66,16 +66,19 @@ class UserFunds
 
     public static function calculateByCategory($transactions, $currency = "GBP")
     {
+        // take the user's transactions and make a list of all the categories the user made an expense on
         $categories = [];
 
         foreach ($transactions as $index => $transaction) {
 
+            // make sure to record only "expense" categories and not repeat categories already recorded
             if ($transaction["type"] === "expense" && !in_array($transaction["category"], $categories)) {
                 $categories[] = $transaction["category"];
             }
         }
 
 
+        // figure out which transactions belong to which category
         $totals = [];
 
         foreach ($categories as $categoryKey => $category) {
@@ -92,6 +95,8 @@ class UserFunds
         }
 
 
+        // calculate the total of how much the user spent on each category
+        // and convert the result to the requested currency
         $reducedTotals = [];
         $rate = ConvertCurrency::getConversionRate($currency);
 
