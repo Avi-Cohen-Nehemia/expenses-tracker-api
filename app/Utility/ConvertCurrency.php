@@ -8,7 +8,7 @@ class ConvertCurrency
 {
     public static function getConversionRate($desiredCurrency) : float
     {
-        $response = Http::get("https://api.exchangeratesapi.io/latest?base=GBP");
+        $response = Http::get("https://api.exchangerate.host/latest?base=GBP");
 
         $rate = $response->json()["rates"][$desiredCurrency];
 
@@ -22,7 +22,7 @@ class ConvertCurrency
         $this->amountInGBP = $amountInGBP;
     }
 
-    public function convert($rate) : float
+    public function convert(float $rate) : float
     {
         $convertedAmount = $this->amountInGBP * $rate;
 
